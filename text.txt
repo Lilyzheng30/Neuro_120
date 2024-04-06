@@ -1,19 +1,10 @@
-Merge the changes from the remote branch into your local branch.: git config pull.rebase false
-
-git add project.py
-git commit -m "Committing local changes to project.py"
-
-git push origin main
-
-
-to push 
+#to push 
 git init
 git add .
 git commit -m "Your commit message here"
 git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
 git push -u origin main
 
-
-
-to pull
+#to pull
 git clone https://github.com/Lilyzheng30/Neuro_120.git
+get pull origin main
