@@ -13,7 +13,7 @@ git clone https://github.com/Lilyzheng30/Neuro_120.git
 
 #####NEW#########
 
-TO PUSH
+TO PUSH (Make sure to press enter twice)
 git init
 git add .
 git commit -m "put ur comment here"
@@ -24,7 +24,7 @@ TO PULL
 git pull origin main
 
 
-TO SAVE WHAT YOU HAVE IN THE TEXT.TXT FILE
+TO SAVE WHAT YOU HAVE IN THE TEXT.TXT FILE (Make sure to press enter twice)
 git add text.txt  # Stage the modifications to text.txt
 git commit -m "update text.txt"
 git push origin main
