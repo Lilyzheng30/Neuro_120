@@ -5,4 +5,15 @@ git commit -m "Committing local changes to project.py"
 
 git push origin main
 
+
+to push 
 git init
+git add .
+git commit -m "Your commit message here"
+git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
+git push -u origin main
+
+
+
+to pull
+git clone https://github.com/Lilyzheng30/Neuro_120.git
