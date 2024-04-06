@@ -1,0 +1,8 @@
+Merge the changes from the remote branch into your local branch.: git config pull.rebase false
+
+git add project.py
+git commit -m "Committing local changes to project.py"
+
+git push origin main
+
+git init
