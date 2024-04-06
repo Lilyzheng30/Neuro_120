@@ -8,3 +8,51 @@ git push -u origin main
 #to pull
 git clone https://github.com/Lilyzheng30/Neuro_120.git
 get pull origin main
+
+NEW
+TO PUSH
+git init
+git add .
+git commit -m "Your commit message here"
+git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
+git push -u origin main
+
+TO PULL
+
+git clone https://github.com/Lilyzheng30/Neuro_120.git
+cd Neuro_120
+git pull origin main
+
+
+
+
+
+
+
+
+NEW
+TO PUSH
+# Initialize a new Git repository if it's not already initialized
+git init
+
+# Add all changes to the staging area
+git add .
+
+# Commit the changes with a meaningful message
+git commit -m "Your commit message here"
+
+# Add the remote repository as the origin
+git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
+
+# Push the changes to the remote repository, setting the upstream branch to main
+git push -u origin main
+
+TO PULL
+# Clone the repository if you haven't already
+git clone https://github.com/Lilyzheng30/Neuro_120.git
+
+# Change directory to the cloned repository
+cd Neuro_120
+
+# Pull changes from the remote repository into your local repository's main branch
+git pull origin main
