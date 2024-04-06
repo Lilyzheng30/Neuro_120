@@ -9,19 +9,25 @@ git push -u origin main
 git clone https://github.com/Lilyzheng30/Neuro_120.git
 get pull origin main
 
+git clone https://github.com/Lilyzheng30/Neuro_120.git
+
 #####NEW#########
 
 TO PUSH
 git init
 git add .
-git commit -m "Your commit message here"
+git commit -m "put ur comment here"
 git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
 git push -u origin main
 
 TO PULL
-
-git clone https://github.com/Lilyzheng30/Neuro_120.git
 git pull origin main
+
+
+TO SAVE WHAT YOU HAVE IN THE TEXT.TXT FILE
+git add text.txt  # Stage the modifications to text.txt
+git commit -m "update text.txt"
+git push origin main
 
 
 rm -rf Neuro_120 to remove a folder.file 
