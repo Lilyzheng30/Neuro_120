@@ -1,2 +1,1 @@
-print("lets actually start the project hehehe")
-print("this is a test")
+print("hi mira how are you doing. if you get this message it means i got ittttt")
