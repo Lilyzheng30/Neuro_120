@@ -1,5 +1,5 @@
 #
 print(1+1)
-print("new")
+return 2
 
 print("hi")
