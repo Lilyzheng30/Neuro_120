@@ -9,7 +9,8 @@ git push -u origin main
 git clone https://github.com/Lilyzheng30/Neuro_120.git
 get pull origin main
 
-NEW
+#####NEW#########
+
 TO PUSH
 git init
 git add .
@@ -20,11 +21,16 @@ git push -u origin main
 TO PULL
 
 git clone https://github.com/Lilyzheng30/Neuro_120.git
-cd Neuro_120
 git pull origin main
 
 
+git rm -r Neuro_120
+git commit -m "Remove Neuro_120 folder"
+git push origin main
 
+git add text.txt  # Stage the modifications to text.txt
+git commit -m "Remove Neuro_120 folder and update text.txt"
+git push origin main
 
 
 
