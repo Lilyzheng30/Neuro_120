@@ -14,10 +14,9 @@ git clone https://github.com/Lilyzheng30/Neuro_120.git
 #####NEW#########
 
 TO PUSH (Make sure to press enter twice)
-git init
+make sure to control save in vs code 
 git add .
 git commit -m "put ur comment here"
-git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
 git push -u origin main
 
 TO PULL
@@ -34,7 +33,7 @@ rm -rf Neuro_120 to remove a folder.file
 git add .
 
 
-
+git remote add origin https://github.com/Lilyzheng30/Neuro_120.git
 
 
 NEW
