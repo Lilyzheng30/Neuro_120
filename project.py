@@ -1,4 +1,4 @@
-#made changes here
+#made changes here i finally got it so you have to open the file then make changes and then save them on ur local computer file then push it to github
 # network.py
 import numpy as np
 from matplotlib import pyplot as plt
