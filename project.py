@@ -16,17 +16,16 @@ def load_mnist_labels(filename):
     return data
 
 # Specify the paths to the extracted files
-train_images_path = 'path/to/train-images-idx3-ubyte'
-train_labels_path = 'path/to/train-labels-idx1-ubyte'
-test_images_path = 'path/to/t10k-images-idx3-ubyte'
-test_labels_path = 'path/to/t10k-labels-idx1-ubyte'
+train_images_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/train-images.idx3-ubyte'
+train_labels_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/train-labels.idx1-ubyte'
+test_images_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/t10k-images.idx3-ubyte'
+test_labels_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/t10k-labels.idx1-ubyte'
 
 # Load the training and testing images and labels
 train_images = load_mnist_images(train_images_path)
 train_labels = load_mnist_labels(train_labels_path)
 test_images = load_mnist_images(test_images_path)
 test_labels = load_mnist_labels(test_labels_path)
-
 
 # Utils
 def reshape(data):
@@ -70,10 +69,11 @@ def preprocessing(img):
 
 def main():
     # Load data
-    (x_train, y_train), (_, _ )= mnist.load_data()
+    x_train = load_mnist_images(train_images_path)
+    y_train = load_mnist_labels(train_labels_path)
     data = []
     for i in range(3):
-        xi = x_train[y_train==i]
+        xi = x_train[y_train == i]
         data.append(xi[0])
     
     # Preprocessing
@@ -81,7 +81,7 @@ def main():
     data = [preprocessing(d) for d in data]
     
     # Create Hopfield Network Model
-    model = network.HopfieldNetwork()
+    model = Hopfieldnetwork.HopfieldNetwork()
     model.train_weights(data)
     
     # Make test datalist
