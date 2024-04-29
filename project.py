@@ -1,116 +1,32 @@
-# made changes here i finally got it so you have to open the file then make changes and then save them on ur local computer file then push it to github
-# cloning is only when you very first start  
-# when you want to pull just one line of code to pull
-# network.py
-import numpy as np
-from matplotlib import pyplot as plt
-import matplotlib.cm as cm
-from tqdm import tqdm
-
-class HopfieldNetwork(object):      
-    def train_weights(self, train_data):
-        print("Start to train weights...")
-        num_data =  len(train_data)
-        self.num_neuron = train_data[0].shape[0]
-        
-        # initialize weights
-        W = np.zeros((self.num_neuron, self.num_neuron))
-        rho = np.sum([np.sum(t) for t in train_data]) / (num_data*self.num_neuron)
-        
-        # Hebb rule
-        for i in tqdm(range(num_data)):
-            t = train_data[i] - rho
-            W += np.outer(t, t)
-        
-        # Make diagonal element of W into 0
-        diagW = np.diag(np.diag(W))
-        W = W - diagW
-        W /= num_data
-        
-        self.W = W 
-    
-    def predict(self, data, num_iter=20, threshold=0, asyn=False):
-        print("Start to predict...")
-        self.num_iter = num_iter
-        self.threshold = threshold
-        self.asyn = asyn
-        
-        # Copy to avoid call by reference 
-        copied_data = np.copy(data)
-        
-        # Define predict list
-        predicted = []
-        for i in tqdm(range(len(data))):
-            predicted.append(self._run(copied_data[i]))
-        return predicted
-    
-    def _run(self, init_s):
-        if self.asyn==False:
-            """
-            Synchronous update
-            """
-            # Compute initial state energy
-            s = init_s
-
-            e = self.energy(s)
-            
-            # Iteration
-            for i in range(self.num_iter):
-                # Update s
-                s = np.sign(self.W @ s - self.threshold)
-                # Compute new state energy
-                e_new = self.energy(s)
-                
-                # s is converged
-                if e == e_new:
-                    return s
-                # Update energy
-                e = e_new
-            return s
-        else:
-            """
-            Asynchronous update
-            """
-            # Compute initial state energy
-            s = init_s
-            e = self.energy(s)
-            
-            # Iteration
-            for i in range(self.num_iter):
-                for j in range(100):
-                    # Select random neuron
-                    idx = np.random.randint(0, self.num_neuron) 
-                    # Update s
-                    s[idx] = np.sign(self.W[idx].T @ s - self.threshold)
-                
-                # Compute new state energy
-                e_new = self.energy(s)
-                
-                # s is converged
-                if e == e_new:
-                    return s
-                # Update energy
-                e = e_new
-            return s
-    
-    
-    def energy(self, s):
-        return -0.5 * s @ self.W @ s + np.sum(s * self.threshold)
-
-    def plot_weights(self):
-        plt.figure(figsize=(6, 5))
-        w_mat = plt.imshow(self.W, cmap=cm.coolwarm)
-        plt.colorbar(w_mat)
-        plt.title("Network Weights")
-        plt.tight_layout()
-        plt.savefig("weights.png")
-        plt.show()
-# train_MNIST.py
 import numpy as np
 from matplotlib import pyplot as plt
 from skimage.filters import threshold_mean
-import network
-from keras.datasets import mnist
+import Hopfieldnetwork
+
+
+def load_mnist_images(filename):
+    with open(filename, 'rb') as f:
+        data = np.frombuffer(f.read(), dtype=np.uint8, offset=16)
+    data = data.reshape(-1, 28, 28)
+    return data
+
+def load_mnist_labels(filename):
+    with open(filename, 'rb') as f:
+        data = np.frombuffer(f.read(), dtype=np.uint8, offset=8)
+    return data
+
+# Specify the paths to the extracted files
+train_images_path = 'path/to/train-images-idx3-ubyte'
+train_labels_path = 'path/to/train-labels-idx1-ubyte'
+test_images_path = 'path/to/t10k-images-idx3-ubyte'
+test_labels_path = 'path/to/t10k-labels-idx1-ubyte'
+
+# Load the training and testing images and labels
+train_images = load_mnist_images(train_images_path)
+train_labels = load_mnist_labels(train_labels_path)
+test_images = load_mnist_images(test_images_path)
+test_labels = load_mnist_labels(test_labels_path)
+
 
 # Utils
 def reshape(data):
