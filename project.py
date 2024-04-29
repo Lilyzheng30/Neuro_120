@@ -44,9 +44,10 @@ def plot(data, test, predicted, figsize=(5, 3)):
             axarr[i, 0].set_title("Train data")
             axarr[i, 1].set_title("Input data")
             axarr[i, 2].set_title('Output data')
-            
-        axarr[i, 0].imshow(data[i])
-        axarr[i, 0].axis('off')
+
+        if i < 3:
+            axarr[i, 0].imshow(data[i])
+            axarr[i, 0].axis('off')
         axarr[i, 1].imshow(test[i])
         axarr[i, 1].axis('off')
         axarr[i, 2].imshow(predicted[i])
@@ -87,12 +88,18 @@ def main():
     model = Hopfieldnetwork.HopfieldNetwork()
     model.train_weights(data)
     
-    # Make test datalist (5 test images, one per digit)
+    # Make test datalist (15 test images per digit)
+    temp_test = []
     test = []
+
     for i in range(3):
         xi = x_train[y_train==i]
-        test.append(xi[1])
-    test = [preprocessing(d) for d in test]
+        temp_test.append(xi[1:16])
+
+    for arr in temp_test:
+        for img in arr:
+            preprocessed_img = preprocessing(img)
+            test.append(preprocessed_img)
     
     predicted = model.predict(test, threshold=50, asyn=False)
     print("Show prediction results...")
