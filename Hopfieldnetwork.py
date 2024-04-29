@@ -8,6 +8,7 @@ class HopfieldNetwork(object):
         print("Start to train weights...")
         num_data =  len(train_data)
         self.num_neuron = train_data[0].shape[0]
+        print(self.num_neuron)
         
         # initialize weights
         W = np.zeros((self.num_neuron, self.num_neuron))
@@ -36,6 +37,7 @@ class HopfieldNetwork(object):
         
         # Define predict list
         predicted = []
+
         for i in tqdm(range(len(data))):
             predicted.append(self._run(copied_data[i]))
         return predicted
@@ -88,8 +90,7 @@ class HopfieldNetwork(object):
                 # Update energy
                 e = e_new
             return s
-    
-    
+        
     def energy(self, s):
         return -0.5 * s @ self.W @ s + np.sum(s * self.threshold)
 

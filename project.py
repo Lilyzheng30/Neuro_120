@@ -33,20 +33,19 @@ def reshape(data):
     data = np.reshape(data, (dim, dim))
     return data
 
-def plot(data, test, predicted, figsize=(3, 3)):
-    data = [reshape(d) for d in data]
+def plot(test, predicted, figsize=(5, 3)):
+    # data = [reshape(d) for d in data]
     test = [reshape(d) for d in test]
     predicted = [reshape(d) for d in predicted]
     
-    fig, axarr = plt.subplots(len(data), 3, figsize=figsize)
-    for i in range(len(data)):
+    fig, axarr = plt.subplots(len(test), 3, figsize=figsize)
+    for i in range(len(test)):
         if i==0:
-            axarr[i, 0].set_title('Train data')
             axarr[i, 1].set_title("Input data")
             axarr[i, 2].set_title('Output data')
             
-        axarr[i, 0].imshow(data[i])
-        axarr[i, 0].axis('off')
+        """axarr[i, 0].imshow(data[i])
+        axarr[i, 0].axis('off')"""
         axarr[i, 1].imshow(test[i])
         axarr[i, 1].axis('off')
         axarr[i, 2].imshow(predicted[i])
@@ -68,32 +67,44 @@ def preprocessing(img):
     return flatten
 
 def main():
-    # Load data
+    # Load data (60,000 test images)
     x_train = load_mnist_images(train_images_path)
     y_train = load_mnist_labels(train_labels_path)
-    data = []
-    for i in range(3):
-        xi = x_train[y_train == i]
-        data.append(xi[0])
-    
+    temp_data = []
+
+    # Define lists for selected data
+    for digit in range(3):
+        xi = x_train[y_train == digit]
+        temp_data.append(xi[:10])
+
     # Preprocessing
     print("Start to data preprocessing...")
-    data = [preprocessing(d) for d in data]
+    data = []  # Initialize an empty list to store preprocessed images
+    for arr in temp_data:
+        for img in arr:
+            preprocessed_img = preprocessing(img)
+            data.append(preprocessed_img)
+    """for arr in temp_data:
+        temp_array = np.zeros(10)
+        for idx, img in enumerate(arr):
+            preprocessed_img = preprocessing(img)
+            temp_array[idx] = preprocessed_img
+            data.append(temp_array)"""
     
     # Create Hopfield Network Model
     model = Hopfieldnetwork.HopfieldNetwork()
     model.train_weights(data)
     
-    # Make test datalist
+    # Make test datalist (5 test images, one per digit)
     test = []
     for i in range(3):
         xi = x_train[y_train==i]
         test.append(xi[1])
     test = [preprocessing(d) for d in test]
     
-    predicted = model.predict(test, threshold=50, asyn=True)
+    predicted = model.predict(test, threshold=50, asyn=False)
     print("Show prediction results...")
-    plot(data, test, predicted, figsize=(5, 5))
+    plot(test, predicted, figsize=(5, 5))
     print("Show network weights matrix...")
     model.plot_weights()
     
