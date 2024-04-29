@@ -99,6 +99,11 @@ def main():
     for arr in temp_test:
         for img in arr:
             preprocessed_img = preprocessing(img)
+            # Decreased inhibition (increase input corruption)
+            corruption_probability = 1
+            corrupted_bits = np.random.rand(*img.shape) < corruption_probability
+            noisy_image = img * (1 - corrupted_bits) + (1 - img) * corrupted_bits
+            #newcode ends here
             test.append(preprocessed_img)
     
     predicted = model.predict(test, threshold=50, asyn=False)
