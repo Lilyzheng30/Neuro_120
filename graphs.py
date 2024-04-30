@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
+#calculated SEM for Error bars
 def calculate_sem(data):
     return np.std(data) / np.sqrt(len(data))
 
@@ -12,7 +13,7 @@ def plotgraph(csv_file, x_values, y_values, x_header, y_header, plot_title):
     plt.bar(x_pos, y_values, yerr=sem_values, capsize=5, width=0.5, color='lightblue')
     plt.xlabel(x_header)
     plt.ylabel(y_header)  
-    plt.title(plot_title)  # Set the title
+    plt.title(plot_title)
     plt.xticks(x_pos, x_values)
     plt.grid(False)
     plt.show()
