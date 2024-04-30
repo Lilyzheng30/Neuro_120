@@ -25,16 +25,13 @@ class HopfieldNetwork(object):
         W /= num_data
 
         # Ablate neurons
-        num_rows, num_cols = W.shape
-        num_ablated = 0
+        num_ablated = 500
         ablated_count = 0
         while ablated_count < num_ablated:
-            row = np.random.randint(0, num_rows)
-            col = np.random.randint(0, num_cols)
-            if W[row, col] != 0:
-                W[row, col] = 0
+            idx = np.random.randint(0, self.num_neuron)
+            if np.sum(W[idx]) != 0:
+                W[idx] = 0
                 ablated_count += 1
-
         self.W = W 
     
     def predict(self, data, num_iter=20, threshold=0, asyn=False):

@@ -2,7 +2,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from skimage.filters import threshold_mean
 import Hopfieldnetwork
-
+import os
+import random
 
 def load_mnist_images(filename):
     with open(filename, 'rb') as f:
@@ -15,11 +16,11 @@ def load_mnist_labels(filename):
         data = np.frombuffer(f.read(), dtype=np.uint8, offset=8)
     return data
 
-# Specify the paths to the extracted files
-train_images_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/train-images.idx3-ubyte'
-train_labels_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/train-labels.idx1-ubyte'
-test_images_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/t10k-images.idx3-ubyte'
-test_labels_path = '/Users/lilyzheng/Documents/GitHub/Neuro_120/t10k-labels.idx1-ubyte'
+# Specify the relative paths to the extracted files
+train_images_path = os.path.join(os.getcwd(), 'train-images.idx3-ubyte')
+train_labels_path = os.path.join(os.getcwd(), 'train-labels.idx1-ubyte')
+test_images_path = os.path.join(os.getcwd(), 't10k-images.idx3-ubyte')
+test_labels_path = os.path.join(os.getcwd(), 't10k-labels.idx1-ubyte')
 
 # Load the training and testing images and labels
 train_images = load_mnist_images(train_images_path)
@@ -33,26 +34,36 @@ def reshape(data):
     data = np.reshape(data, (dim, dim))
     return data
 
-def plot(data, test, predicted, figsize=(5, 3)):
+def plot(data, test, predicted, figsize=(15, 15)):
     data = [reshape(d) for d in data]
     test = [reshape(d) for d in test]
     predicted = [reshape(d) for d in predicted]
     
     fig, axarr = plt.subplots(len(test), 3, figsize=figsize)
+    for ax_row in axarr:
+        for ax in ax_row:
+            ax.figure.set_size_inches(5, 5)
+    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)  
     for i in range(len(test)):
-        if i==0:
+        if i == 0:
             axarr[i, 0].set_title("Train data")
             axarr[i, 1].set_title("Input data")
             axarr[i, 2].set_title('Output data')
-
-        if i < 3:
-            axarr[i, 0].imshow(data[i])
-            axarr[i, 0].axis('off')
         axarr[i, 1].imshow(test[i])
         axarr[i, 1].axis('off')
         axarr[i, 2].imshow(predicted[i])
         axarr[i, 2].axis('off')
-            
+        if i in range(0, 15):  # Check if i is in the range [0, 15)
+            axarr[i, 0].imshow(data[0])
+            axarr[i, 0].axis('off')
+        elif i in range(15, 30):  # Check if i is in the range [15, 30)
+            axarr[i, 0].imshow(data[1])
+            axarr[i, 0].axis('off')
+        elif i in range(30, 45):  # Check if i is in the range [30, 45)
+            axarr[i, 0].imshow(data[2])
+            axarr[i, 0].axis('off')
+
+    print(len(test))
     plt.tight_layout()
     plt.savefig("result_mnist.png")
     plt.show()
@@ -92,25 +103,28 @@ def main():
     temp_test = []
     test = []
 
+    
     for i in range(3):
-        xi = x_train[y_train==i]
-        temp_test.append(xi[1:16])
+        # Filter x_train based on y_train labels equal to the current digit
+        xi = x_train[y_train == i]
+        random.shuffle(xi)
+        selected_samples = xi[1:16]        
+        temp_test.append(selected_samples)
 
     for arr in temp_test:
         for img in arr:
             preprocessed_img = preprocessing(img)
             # Decreased inhibition (increase input corruption)
-            corruption_probability = 1
+            corruption_probability = 0.75
             corrupted_bits = np.random.rand(*img.shape) < corruption_probability
             noisy_image = img * (1 - corrupted_bits) + (1 - img) * corrupted_bits
-            #newcode ends here
-            test.append(preprocessed_img)
+            test.append(preprocessing(noisy_image)) 
     
-    predicted = model.predict(test, threshold=50, asyn=False)
+    predicted = model.predict(test, threshold=75, asyn=False)
     print("Show prediction results...")
-    plot(data, test, predicted, figsize=(5, 5))
+    plot(data, test, predicted, figsize=(10, 10))
     print("Show network weights matrix...")
-    model.plot_weights()
+    #model.plot_weights()
     
 if __name__ == '__main__':
     main()
