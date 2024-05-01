@@ -24,7 +24,7 @@ def scatter(csv_file, x_values, y_values, x_header, y_header, plot_title):
     plt.legend()
     plt.show()
 
-csv_file = 'Final_Project_Data.csv'
+csv_file = 'Scatter_plot_data.csv'
 data = []
 with open(csv_file, 'r') as file:
     reader = csv.reader(file)
