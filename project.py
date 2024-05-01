@@ -4,7 +4,10 @@ from skimage.filters import threshold_mean
 import Hopfieldnetwork
 import os
 import random
+# This code what mostly taken from GitHub repository https://github.com/takyamamoto/Hopfield-Network but 
+# We altered parts of the code such that it would be a better fit for our model
 
+# Importing file
 def load_mnist_images(filename):
     with open(filename, 'rb') as f:
         data = np.frombuffer(f.read(), dtype=np.uint8, offset=16)
@@ -39,6 +42,7 @@ def plot(data, test, predicted, figsize=(15, 15)):
     test = [reshape(d) for d in test]
     predicted = [reshape(d) for d in predicted]
     
+    # Setting up the image diagram. Taking the layout that was in the GitHub and altering it to contain more images
     fig, axarr = plt.subplots(len(test), 3, figsize=figsize)
     for ax_row in axarr:
         for ax in ax_row:
@@ -53,17 +57,16 @@ def plot(data, test, predicted, figsize=(15, 15)):
         axarr[i, 1].axis('off')
         axarr[i, 2].imshow(predicted[i])
         axarr[i, 2].axis('off')
-        if i in range(0, 15):  # Check if i is in the range [0, 15)
+        if i in range(0, 15): 
             axarr[i, 0].imshow(data[0])
             axarr[i, 0].axis('off')
-        elif i in range(15, 30):  # Check if i is in the range [15, 30)
+        elif i in range(15, 30): 
             axarr[i, 0].imshow(data[1])
             axarr[i, 0].axis('off')
-        elif i in range(30, 45):  # Check if i is in the range [30, 45)
+        elif i in range(30, 45): 
             axarr[i, 0].imshow(data[2])
             axarr[i, 0].axis('off')
 
-    print(len(test))
     plt.tight_layout()
     plt.savefig("result_mnist.png")
     plt.show()
@@ -92,7 +95,6 @@ def main():
 
     # Preprocessing
     print("Start to data preprocessing...")
-    print(len(data))
     data = [preprocessing(d) for d in data]
     
     # Create Hopfield Network Model
@@ -115,7 +117,8 @@ def main():
         for img in arr:
             preprocessed_img = preprocessing(img)
             # Decreased inhibition (increase input corruption)
-            corruption_probability = 0.75
+            # Implimented code to increase the corruption of the input image after the model is trained
+            corruption_probability = 0.15
             corrupted_bits = np.random.rand(*img.shape) < corruption_probability
             noisy_image = img * (1 - corrupted_bits) + (1 - img) * corrupted_bits
             test.append(preprocessing(noisy_image)) 
@@ -124,7 +127,7 @@ def main():
     print("Show prediction results...")
     plot(data, test, predicted, figsize=(10, 10))
     print("Show network weights matrix...")
-    #model.plot_weights()
+    model.plot_weights()
     
 if __name__ == '__main__':
     main()

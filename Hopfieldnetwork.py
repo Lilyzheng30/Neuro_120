@@ -2,13 +2,14 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 from tqdm import tqdm
+# This code what mostly taken from GitHub repository https://github.com/takyamamoto/Hopfield-Network but 
+# we altered parts of the code such that it would be a better fit for our model
 
 class HopfieldNetwork(object):  
     def train_weights(self, train_data):
         print("Start to train weights...")
         num_data =  len(train_data)
         self.num_neuron = train_data[0].shape[0]
-        print(self.num_neuron)
         
         # initialize weights
         W = np.zeros((self.num_neuron, self.num_neuron))
@@ -25,7 +26,8 @@ class HopfieldNetwork(object):
         W /= num_data
 
         # Ablate neurons
-        num_ablated = 500
+        # This code corresponds with our project question of limiting cognitive resources and slowering processing speed to measure accuracy
+        num_ablated = 50
         ablated_count = 0
         while ablated_count < num_ablated:
             idx = np.random.randint(0, self.num_neuron)
@@ -40,7 +42,6 @@ class HopfieldNetwork(object):
         self.threshold = threshold
         self.asyn = asyn
         
-        # Copy to avoid call by reference 
         copied_data = np.copy(data)
         
         # Define predict list
