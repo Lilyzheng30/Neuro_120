@@ -25,5 +25,5 @@ with open(csv_file, 'r') as file:
     headers = next(reader)
     data = list(zip(*reader))
 
-plotgraph(csv_file, data[0], [float(val) for val in data[1]], headers[0], headers[1], 'Decreased Inhibition')
-plotgraph(csv_file, data[2], [float(val) for val in data[3]], headers[2], headers[3], 'Slower Processing Speed/Limited Resource')
+plotgraph(csv_file, data[0], [float(val) for val in data[1]], headers[0], headers[1], 'Percent Accuracy vs Percent Corruption')
+plotgraph(csv_file, data[2], [float(val) for val in data[3]], headers[2], headers[3], 'Percent Accuracy vs Number of Ablated Neurons')
