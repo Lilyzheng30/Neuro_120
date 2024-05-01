@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 def calculate_sem(data):
     return np.std(data) / np.sqrt(len(data))
 
+#plotting a bar graph that has the SEM as error bars 
 def plotgraph(csv_file, x_values, y_values, x_header, y_header, plot_title):
     x_pos = np.arange(len(x_values))
     sem_values = [calculate_sem(y_values)] * len(y_values)
@@ -24,6 +25,8 @@ with open(csv_file, 'r') as file:
     reader = csv.reader(file)
     headers = next(reader)
     data = list(zip(*reader))
-
+    
+# Plot for Percent Accuracy vs Percent Corruption
 plotgraph(csv_file, data[0], [float(val) for val in data[1]], headers[0], headers[1], 'Percent Accuracy vs Percent Corruption')
+# Plot for Percent Accuracy vs Number of Ablated Neurons
 plotgraph(csv_file, data[2], [float(val) for val in data[3]], headers[2], headers[3], 'Percent Accuracy vs Number of Ablated Neurons')
