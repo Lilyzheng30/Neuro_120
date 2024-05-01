@@ -17,6 +17,7 @@ def scatter(csv_file, x_values, y_values, x_header, y_header, plot_title):
     equation = f"y = {fitted_curve[3]:.7f}x^3 + {fitted_curve[2]:.5f}x^2 + {fitted_curve[1]:.5f}x + {fitted_curve[0]:.5f}"
     print("Equation of the curve:", equation)
     
+    # Plotting scatter plot as well as the curve of best fit
     plt.scatter(x_values, y_values)
     x_range = np.linspace(min(x_values), max(x_values), 100)
     plt.plot(x_range, fitted_curve(x_range), color='lightblue', linestyle='--', label=f'Fitted Curve, $R^2 = {r_sq:.5f}$')
