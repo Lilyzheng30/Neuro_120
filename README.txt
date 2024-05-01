@@ -17,4 +17,8 @@ Scatter_plot.py
 Code uses Scatter_plot_data.csv to plot a scatter plot that and the curve of best fit. We also calculated the Rsq values. 
 
 3d_plot.py
-code using 3D_plot_data.csv to plot a 3D scatter graphs. We plotted a fitted plane and also calcuated the Rsq values.  
+code using 3D_plot_data.csv to plot a 3D scatter graphs. We plotted a fitted plane and also calculated the Rsq values.  
+
+results_mnist.png has the image of the training, input and output images. 
+
+weights.png has the image of weight matrix of the 784 neurons showing connections between neurons in the model.
